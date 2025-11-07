@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="title">{{ 'Edit Item' if item else 'New Item' }}</h1>
+<form method="post" action="{{ '/items/' ~ item.id if item else '/items' }}" class="box">
+  <div class="field">
+    <label class="label">Name</label>
+    <div class="control">
+      <input class="input" type="text" name="name" value="{{ item.name if item else '' }}" required>
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">SKU</label>
+    <div class="control">
+      <input class="input" type="text" name="sku" value="{{ item.sku if item else '' }}" required>
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">Barcode</label>
+    <div class="control">
+      <input class="input" type="text" name="barcode" value="{{ item.barcode if item else '' }}">
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">Item Type</label>
+    <div class="control">
+      <div class="select">
+        <select name="item_type">
+          {% for t in types %}
+          <option value="{{ t.value }}" {% if item and item.item_type == t %}selected{% endif %}>{{ t.value }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">Default Price</label>
+    <div class="control">
+      <input class="input" type="number" step="0.01" name="default_price" value="{{ item.default_price if item else '0.00' }}">
+    </div>
+  </div>
+  <div class="field">
+    <label class="checkbox">
+      <input type="checkbox" name="allow_negative" {% if item and item.allow_negative %}checked{% endif %}>
+      Allow negative stock for this item
+    </label>
+  </div>
+  <div class="field">
+    <button class="button is-primary" type="submit">Save</button>
+    <a class="button" href="/items">Cancel</a>
+  </div>
+</form>
+{% endblock %}

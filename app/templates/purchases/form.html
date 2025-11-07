@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="title">New Purchase</h1>
+<form method="post" action="/purchases" class="box" x-data="{lines: [{item_id: '', quantity: 1, unit_cost: 0}]}">
+  <div class="field">
+    <label class="label">Supplier</label>
+    <div class="control">
+      <div class="select is-fullwidth">
+        <select name="supplier_id">
+          <option value="">-- none --</option>
+          {% for supplier in suppliers %}
+          <option value="{{ supplier.id }}">{{ supplier.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <div class="field">
+        <label class="label">Reference</label>
+        <div class="control">
+          <input class="input" type="text" name="reference" required>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Date</label>
+        <div class="control">
+          <input class="input" type="date" name="date" value="{{ today }}">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">Notes</label>
+    <div class="control">
+      <textarea class="textarea" name="notes"></textarea>
+    </div>
+  </div>
+  <hr>
+  <h2 class="subtitle">Lines</h2>
+  <template x-for="(line, index) in lines" :key="index">
+    <div class="box">
+      <div class="columns">
+        <div class="column">
+          <label class="label">Item</label>
+          <div class="select is-fullwidth">
+            <select x-model="line.item_id" x-bind:name="'lines-' + index + '-item_id'" required>
+              <option value="">-- select --</option>
+              {% for item in items %}
+              <option value="{{ item.id }}">{{ item.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="column">
+          <label class="label">Quantity</label>
+          <input class="input" type="number" step="0.001" x-model="line.quantity" x-bind:name="'lines-' + index + '-quantity'" required>
+        </div>
+        <div class="column">
+          <label class="label">Unit Cost</label>
+          <input class="input" type="number" step="0.0001" x-model="line.unit_cost" x-bind:name="'lines-' + index + '-unit_cost'" required>
+        </div>
+        <div class="column is-narrow">
+          <label class="label">&nbsp;</label>
+          <button class="button is-danger" type="button" @click="lines.splice(index,1)" x-show="lines.length > 1">Remove</button>
+        </div>
+      </div>
+    </div>
+  </template>
+  <div class="field">
+    <button class="button is-link" type="button" @click="lines.push({item_id: '', quantity: 1, unit_cost: 0})">Add Line</button>
+  </div>
+  <div class="field">
+    <button class="button is-primary" type="submit">Save Purchase</button>
+    <a class="button" href="/purchases">Cancel</a>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="level">
+  <div class="level-left"><h1 class="title">Customers</h1></div>
+  <div class="level-right"><a class="button is-primary" href="/customers/new">New Customer</a></div>
+</div>
+<table class="table is-fullwidth">
+  <thead>
+    <tr><th>Name</th><th>Contact</th><th>Email</th><th>Balance</th><th></th></tr>
+  </thead>
+  <tbody>
+  {% for customer in customers %}
+    <tr>
+      <td>{{ customer.name }}</td>
+      <td>{{ customer.contact or '-' }}</td>
+      <td>{{ customer.email or '-' }}</td>
+      <td>{{ '%.2f'|format(balances.get(customer.id, 0)) }}</td>
+      <td>
+        <a class="button is-small" href="/customers/{{ customer.id }}/edit">Edit</a>
+        <form method="post" action="/customers/{{ customer.id }}/delete" style="display:inline">
+          <button class="button is-small is-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

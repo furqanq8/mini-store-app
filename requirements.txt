@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+sqlmodel
+alembic
+jinja2
+python-multipart
+pydantic
+httpx
+itsdangerous
+fpdf2
+pytest
+pytest-asyncio
+alembic
+sqlalchemy-utils

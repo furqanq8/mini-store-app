@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="title">{{ 'Edit Customer' if customer else 'New Customer' }}</h1>
+<form method="post" action="{{ '/customers/' ~ customer.id if customer else '/customers' }}" class="box">
+  <div class="field">
+    <label class="label">Name</label>
+    <div class="control"><input class="input" type="text" name="name" value="{{ customer.name if customer else '' }}" required></div>
+  </div>
+  <div class="field">
+    <label class="label">Contact</label>
+    <div class="control"><input class="input" type="text" name="contact" value="{{ customer.contact if customer else '' }}"></div>
+  </div>
+  <div class="field">
+    <label class="label">Email</label>
+    <div class="control"><input class="input" type="email" name="email" value="{{ customer.email if customer else '' }}"></div>
+  </div>
+  <div class="field">
+    <button class="button is-primary" type="submit">Save</button>
+    <a class="button" href="/customers">Cancel</a>
+  </div>
+</form>
+{% endblock %}
