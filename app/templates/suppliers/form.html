@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="title">{{ 'Edit Supplier' if supplier else 'New Supplier' }}</h1>
+<form method="post" action="{{ '/suppliers/' ~ supplier.id if supplier else '/suppliers' }}" class="box">
+  <div class="field">
+    <label class="label">Name</label>
+    <div class="control"><input class="input" type="text" name="name" value="{{ supplier.name if supplier else '' }}" required></div>
+  </div>
+  <div class="field">
+    <label class="label">Contact</label>
+    <div class="control"><input class="input" type="text" name="contact" value="{{ supplier.contact if supplier else '' }}"></div>
+  </div>
+  <div class="field">
+    <label class="label">Email</label>
+    <div class="control"><input class="input" type="email" name="email" value="{{ supplier.email if supplier else '' }}"></div>
+  </div>
+  <div class="field">
+    <button class="button is-primary" type="submit">Save</button>
+    <a class="button" href="/suppliers">Cancel</a>
+  </div>
+</form>
+{% endblock %}

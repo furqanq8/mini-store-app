@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="level">
+  <div class="level-left"><h1 class="title">Suppliers</h1></div>
+  <div class="level-right"><a class="button is-primary" href="/suppliers/new">New Supplier</a></div>
+</div>
+<table class="table is-fullwidth">
+  <thead>
+    <tr><th>Name</th><th>Contact</th><th>Email</th><th></th></tr>
+  </thead>
+  <tbody>
+  {% for supplier in suppliers %}
+    <tr>
+      <td>{{ supplier.name }}</td>
+      <td>{{ supplier.contact or '-' }}</td>
+      <td>{{ supplier.email or '-' }}</td>
+      <td>
+        <a class="button is-small" href="/suppliers/{{ supplier.id }}/edit">Edit</a>
+        <form method="post" action="/suppliers/{{ supplier.id }}/delete" style="display:inline">
+          <button class="button is-small is-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

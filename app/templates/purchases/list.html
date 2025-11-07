@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="level">
+  <div class="level-left"><h1 class="title">Purchases</h1></div>
+  <div class="level-right"><a class="button is-primary" href="/purchases/new">New Purchase</a></div>
+</div>
+<table class="table is-fullwidth">
+  <thead>
+    <tr><th>Date</th><th>Reference</th><th>Supplier</th><th>Lines</th></tr>
+  </thead>
+  <tbody>
+  {% for purchase in purchases %}
+    <tr>
+      <td>{{ purchase.date }}</td>
+      <td>{{ purchase.reference }}</td>
+      <td>{{ suppliers.get(purchase.supplier_id).name if purchase.supplier_id else '-' }}</td>
+      <td>
+        <ul>
+        {% for line in purchase.lines %}
+          <li>{{ line.quantity }} x {{ line.item.name }} @ {{ '%.2f'|format(line.unit_cost) }}</li>
+        {% endfor %}
+        </ul>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

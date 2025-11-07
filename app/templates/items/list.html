@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="level">
+  <div class="level-left">
+    <h1 class="title">Items</h1>
+  </div>
+  <div class="level-right">
+    <a class="button is-primary" href="/items/new">New Item</a>
+  </div>
+</div>
+<table class="table is-fullwidth is-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>SKU</th>
+      <th>Barcode</th>
+      <th>Type</th>
+      <th>Default Price</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in items %}
+    <tr>
+      <td>{{ item.name }}</td>
+      <td>{{ item.sku }}</td>
+      <td>{{ item.barcode or '-' }}</td>
+      <td>{{ item.item_type }}</td>
+      <td>{{ '%.2f'|format(item.default_price) }}</td>
+      <td>
+        <a class="button is-small" href="/items/{{ item.id }}/edit">Edit</a>
+        <form method="post" action="/items/{{ item.id }}/delete" style="display:inline">
+          <button class="button is-small is-danger" type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

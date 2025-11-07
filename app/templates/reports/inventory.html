@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="level">
+  <div class="level-left"><h1 class="title">Inventory On Hand</h1></div>
+  <div class="level-right">
+    <a class="button" href="/reports/inventory.csv">Download CSV</a>
+    <a class="button" href="/reports/inventory.pdf">Download PDF</a>
+  </div>
+</div>
+<table class="table is-fullwidth">
+  <thead><tr><th>Item</th><th>Quantity</th><th>Unit Cost</th><th>Value</th></tr></thead>
+  <tbody>
+  {% for entry in inventory %}
+    <tr>
+      <td>{{ entry.item.name }}</td>
+      <td>{{ entry.quantity }}</td>
+      <td>{{ '%.2f'|format(entry.unit_cost) }}</td>
+      <td>{{ '%.2f'|format(entry.value) }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="title">Settings</h1>
+<form method="post" action="/settings" class="box">
+  <div class="field">
+    <label class="label">VAT Rate (%)</label>
+    <div class="control"><input class="input" type="number" step="0.01" name="vat_rate" value="{{ settings.get('vat_rate', '0') }}"></div>
+  </div>
+  <div class="field">
+    <label class="checkbox">
+      <input type="checkbox" name="no_negative_stock" {% if settings.get('no_negative_stock', 'true') == 'true' %}checked{% endif %}>
+      Prevent negative stock globally
+    </label>
+  </div>
+  <div class="field">
+    <button class="button is-primary" type="submit">Save Settings</button>
+  </div>
+</form>
+{% endblock %}
